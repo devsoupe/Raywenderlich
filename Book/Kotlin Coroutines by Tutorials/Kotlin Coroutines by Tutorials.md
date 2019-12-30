@@ -1,4 +1,4 @@
-# Kotlin Coroutines by Tutorials (코틀린 코루틴)
+# 코틀린 코루틴 튜토리얼 (Kotlin Coroutines by Tutorials)
 
 <https://store.raywenderlich.com/products/kotlin-coroutines-by-tutorials>
 
