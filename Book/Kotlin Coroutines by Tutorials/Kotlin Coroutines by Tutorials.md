@@ -173,8 +173,7 @@ fun fetchUser(userId: String) {
 
 * 코루틴은 마법이 아니라 로우 레벨 기능을 잘 사용하는 방법일 뿐이다.
 * getUser()가 suspendable functions로 마크되어 있다면 시스템은 백그라운드에서 호출을 준비한다.
-* 그 결과를 사용할 위치(user.name)에서 결과를 요청하면 결과를 얻을때까지 차단하거나 중단하고 기다릴 있는데 이를 awaiting이라고 부른다.
-* 중요한 점은 getUser() 함수를 부른 후에 멈추지 않는다는 것이다.
+* 결과를 얻을때까지 차단하거나 중단하고 기다릴 있는데 이를 awaiting이라고 부른다.
 * 코루틴에서는 비동기 코드를 작성하는 것이 매우 간단하기 때문에, 복수의 요청이나 데이터 변환을 쉽게 결합할 수 있다.
 * 콜백이니, 스트림이니 하는 복잡한 연산자 없이 함수를 suspendable functions로 표시하고 코루틴 블록으로 호출하기만 하면 된다.
 * 코루틴은 오래되었지만 강력한 개념으로 여러 프로그래밍 언어에서 그 구현의 버전을 발전시켜 왔다.
@@ -190,9 +189,65 @@ fun fetchUser(userId: String) {
 * 코루틴은 항상 새로운 스레드를 만들지 않고 스레드 풀 이미 있는 스레드를 재사용한다.
 * 코루틴을 통해 깨끗하고 순차적인 스타일로 비동기 코드를 작성할 수 있다.
 
+### Where to go from here?
+
+* suspendable functions과 suspension points를 배우게 된다.
+* 코틀린에서 코루틴을 어떻게 만들었는지 배우게 된다.
+* 결과를 반환하는 비동기 호출을 만들고 결과를 기다리는 방법을 배우게 된다.
+
 ## `1.2. 빌드환경 세팅`
 
-* 
+### JDK 구성
+
+* Intellij는 순수 Kotlin, Java 프로젝트 및 스프링 플러그인도 지원하여 다양한 프로젝트를 사용할 수 있다.
+* Intellij는 JVM 환경을 필요로 하므로 먼저 Java Development Kit(JDK) 설정이 필요하다.
+* 다운로드 주소 (https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* 책에서 일부 기능은 안드로이드를 기반으로 하므로 1.8까지만 지원하는 안드로이드에 맞춰 1.8을 사용하도록 한다.
+
+### Intellij IDEA 설치
+
+* 이 책에서는 강력한 기능을 지원하는 Intellij를 사용한다.
+* 다운로드 주소 (https://www.jetbrains.com/idea/download)
+* 설치 후 이전 설정이 있다면 설정을 가져오도록 한다.
+* Kotlin JVM 프로젝트 생성하는 방법을 알아보도록 한다.
+
+```txt
+1. Intellij IDEA 팝업 창에서 Create New Project 선택한다.
+2. 프로젝트 타입을 선택하고 Kotlin > Kotlin/JVM 다음으로 이동한다.
+3. 프로젝트 이름, 위치, SDK, Kotlin Runtime을 선택하고 완료한다.
+```
+
+### 안드로이드 환경설정 구성
+
+* 추후 코루틴을 안드로이드 멀티스레딩 환경에서 구현할수 있으므로 안드로이드 스튜디오를 설치하도록 한다.
+* 다운로드 주소 (https:// developer.android.com/studio)
+* 안드로이드 새 프로젝트를 시작하는 방법을 알아보도록 한다.
+
+```txt
+1. Start a new Android Studio project를 선택한다.
+2. 두번째 스텝으로 이동하여 API Level를 21로 선택한다.
+3. 최종 스텝으로 이동하여 Empty Application 옵션을 선택한 후 다음으로 진행하여 완료한다.
+```
+
+### 프로젝트 가져오기
+
+* Intellij에서 새로운 프로젝트 시작이 아닌 기존 프로젝트를 가져올 수 도 있다.
+
+```txt
+1. Import Project를 선택한다.
+2. 폴더를 선택하는 팝업 창이 뜨면 기존 프로젝트 폴더를 선택한 후 Open을 누른다.
+3. 프로젝트 타입을 선택하는 창이 뜨면 Gradle를 선택하고 다음으로 이동한 후 완료를 누른다.
+```
+
+### 키포인트
+
+* Intellij IDEA는 JVM 개발환경이다.
+* 안드로이드 스튜디오는 완전히 통합된 Gradle 빌드시스템을 사용한다.
+
+### Where to go from here?
+
+* 환경설정을 완료함으로 프로젝트를 수행할 수 있게 되었다.
+* 몇몇 세팅을 프로젝트를 시작으로 연습코드 작업을 시작할 수 있다.
 
 ## `1.3. 코루틴 시작`
 
