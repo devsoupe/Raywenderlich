@@ -67,6 +67,3 @@ gradle-app.setting
 /doc
 /schema/episodes
 updateSchema.sh
-
-# Source Folder
-/sources
