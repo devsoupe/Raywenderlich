@@ -251,7 +251,38 @@ fun fetchUser(userId: String) {
 
 ## `1.3. 코루틴 시작`
 
-* 
+* routines과 실행흐름을 어떻게 제어하는지 배운다.
+* suspendable funtions과 suspension points에 대해 배운다.
+* 몇가지 작업을 생성하여 UI 스레드에 게시하는 법을 배운다.
+
+### routines 실행
+
+* 프로그램에는 main 함수와 같은 주 루틴이 있고 그 main 블럭에서 서브루틴을 호출할 수 있다.
+* 기본적으로 서브루틴은 블럭킹 콜로 동작하지만 코루틴에서는 넌블럭킹 콜로 부를 수 있다.
+* 넌블럭킹 콜은 코드가 병행으로 실행된다는 것을 의미한다.
+
+### 코루틴 실행
+
+* [소스코드](sources/getting_started_witch_coroutines)
+
+> Main.kt
+```kotlin
+fun main() {
+    (1..10000).forEach {
+        GlobalScope.launch {
+            val threadName = Thread.currentThread().name
+            println("$it printed on thread ${threadName}")
+        }
+    }
+    Thread.sleep(1000)
+}
+```
+
+* 10000개의 코루틴을 실행해도 코루틴은 가볍기 때문에 성능저하 없이 잘 수행된다.
+* 스레드였다면 대부분 OutOfMemory를 냈을것이다.
+* 코루틴 바디는 코루틴 빌더라고 불리는 launch() 파라이터로 전달되는 코드 블럭이다.
+* 코루틴을 실행할때 실행시점의 라이프사이클과 관계없는 백그라운드 CoroutineScope를 가진다. 위에서는 GlobalScope를 가지고 이는 애플리케이션 라이프사이클에 묶이게 된다.
+
 
 ## `1.4. Suspending 함수`
 
