@@ -263,7 +263,7 @@ fun fetchUser(userId: String) {
 
 ### 코루틴 실행
 
-* [소스코드](sources/getting_started_witch_coroutines)
+* [소스코드](sources/getting_started_with_coroutines)
 
 > Main.kt
 ```kotlin
@@ -308,11 +308,18 @@ public fun CoroutineScope.launch(
 * 코루틴은 메인 실행흐름과 병행해서 실행되나 메인 실행흐름이 종료되거나 멈춘다고 해서 코루틴도 동일하게 동작한다는 뜻이 아니다.
 * 서로 다른 라이프사이클은 프로그램의 미묘한 버그룰 유발할 수 있다.
 * 서로 다른 라이프사이클을 해결하고자 코루틴은 CoroutineScope를 만들었고 이 자체 라이프사이클이 종료되면 진행중이던 모든 작업이 중지된다.
-* 코루틴에서 launch() 호출하는 방법에는 두가지가 있다.
+* 코루틴에서 launch() 호출하는 방법에는 두가지가 있고 상황에 맞게 사용하면 된다.
 
 ```txt
-
+1. 코루틴이 어디서 실행되는지 아무 상관없는 GlobalScope를 사용 (결과나 UI스레드 처리에 대해 신경쓰지 않을때)
+2. CoroutineScope 인터페이스를 구현하여 CoroutineContext 인스턴스를 제공 (UI스레드에 결과를 반영하거나 Activity 라이프사이클에 바인딩 해야될때)
 ```
+
+### Jobs 설명
+
+* 코드를 생성 후 실행하는 것, launch()의 결과를 가르켜 Job이라고 부른다.
+* launch() 함수 실행시 람다로 전달한 코드가 바로 실행되는 것이 아니라 큐에 삽입된다.
+* 
 
 ## `1.4. Suspending 함수`
 
