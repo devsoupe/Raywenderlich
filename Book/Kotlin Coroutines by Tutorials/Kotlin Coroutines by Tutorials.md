@@ -283,6 +283,36 @@ fun main() {
 * 코루틴 바디는 코루틴 빌더라고 불리는 launch() 파라이터로 전달되는 코드 블럭이다.
 * 코루틴을 실행할때 실행시점의 라이프사이클과 관계없는 백그라운드 CoroutineScope를 가진다. 위에서는 GlobalScope를 가지고 이는 애플리케이션 라이프사이클에 묶이게 된다.
 
+### 코루틴 생성
+
+* 코루틴 실행을 위해서는 코루틴 빌더를 사용해야 한다.
+* 코루틴 라이브러리는 여러개의 코루틴 빌더를 가지고 있고 이를 통해 코루틴을 시작할 수 있게 해준다.
+* launch() 함수원형은 보면 다음과 같다.
+
+```kotlin
+public fun CoroutineScope.launch(
+    context: CoroutineContext = EmptyCoroutineContext,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+): Job
+```
+
+* launch는 CoroutineContext, CoroutineStart, 람다함수 세개의 파라미터를 가진다.
+* CoroutineContext, CorutineStart는 기본값으로 세팅되어 있으므로 세팅 필수값은 아니다.
+* CoroutineStart 옵션에는 DEFAULT, LAZY, ATOMIC, UNDISPATCHED가 있다.
+* 마지막 람다함수(CoroutineScope 타입 리시버)에는 코루틴이 실행할 코드를 넣어주면 된다.
+* 코틀린은 suspendable functions 개념으로 만들어져 있고 마지막 람다함수는 suspend로 정의되어 있다.
+
+### 코루틴 범위지정
+
+* 코루틴은 메인 실행흐름과 병행해서 실행되나 메인 실행흐름이 종료되거나 멈춘다고 해서 코루틴도 동일하게 동작한다는 뜻이 아니다.
+* 서로 다른 라이프사이클은 프로그램의 미묘한 버그룰 유발할 수 있다.
+* 서로 다른 라이프사이클을 해결하고자 코루틴은 CoroutineScope를 만들었고 이 자체 라이프사이클이 종료되면 진행중이던 모든 작업이 중지된다.
+* 코루틴에서 launch() 호출하는 방법에는 두가지가 있다.
+
+```txt
+
+```
 
 ## `1.4. Suspending 함수`
 
