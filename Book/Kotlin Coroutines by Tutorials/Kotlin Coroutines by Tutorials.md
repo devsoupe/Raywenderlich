@@ -265,7 +265,8 @@ fun fetchUser(userId: String) {
 
 * [소스코드](sources/getting_started_with_coroutines)
 
-> Main.kt
+`Main.kt`
+
 ```kotlin
 fun main() {
     (1..10000).forEach {
@@ -334,6 +335,54 @@ public fun CoroutineScope.launch(
 * 코루틴 launch() 후 Job이 생성되면 예외 혹은 어플리케이션 상황으로 인해 Job을 취소해야 되는 여러 상황들이 발생할 수 있다.
 * 네트워크를 통해 이미지를 받아 보여주는 작업을 코루틴을 통해 한다고 가정할때 네트워크가 연결이 안되거나 스크롤 리스트에서 사라진경우 필요한 취소작업을 코루틴에서 어떻게 처리해야하는지에 대해 이해하는 것이 매우 중요하다.
 * 코루틴은 suspending behavior 기능을 가지고 있어 시스템을 다운 시킬 수 있는 uncaught exception도 일시 중단하여 나중에 관리할 수 있다.
+* 직접 cancel() 함수를 호출해 작업을 취소할 수 있고, 취소된 작업의 관계를 시스템이 파악하여 자식이나, 부모 작업을 같이 취소해준다. (자식 상태에 상관없이 독립적으로 취소나 실패가 가능한 부모 Job도 있는데 이른 SupervisorJob이라고 부른다)
+* Job은 취소에 대한 여러 상황에 대비해 최소한 isActive 속성값을 확인 이 값에 의존적으로 코드를 수행하는것이 안전하다.
+
+### 코루틴 깊이 파고들기
+
+* 코루틴에서 지연을 주고 싶다면 delay() 함수를 사용하면 된다.
+
+```kotlin
+fun main() {
+    GlobalScope.launch {
+        println("Hello coroutine!")
+        delay(500)
+        println("Right back at ya!")
+    }
+    Thread.sleep(1000)
+}
+```
+
+* 이는 스레드가 멈추거나 막힌게 아니라 단지 코루틴이 잠깐 멈췄을 뿐이라는게 중요하다.
+
+### 액션에 종속된 Job
+
+* 코루틴을 launch 하면 Job 참조를 얻는다는것을 이미 확인했다.
+* 코루틴에서는 다른 Jobs 사이에 의존성을 만들 수 있다.
+
+```kotlin
+fun main() {
+    val job1 = GlobalScope.launch(start = CoroutineStart.LAZY) {
+        delay(200)
+        println("Pong")
+        delay(200)
+    }
+
+    GlobalScope.launch {
+        delay(200)
+        println("Ping")
+        job1.join()
+        println("Ping")
+        delay(200)
+    }
+    Thread.sleep(1000)
+}
+
+// 첫번째 코루틴으로 약간의 딜레이와 Pong을 출력하는 Job을 job1 레퍼런스로 만듬
+// 두번째 코루틴은 몇개의 출력문과 job1 조인을 수행함
+```
+
+* Pong을 수행 후 Ping을 두번 출력하거라 예상했겠지만 CoroutineStart.LAZY로 인해 실제 필요할때 수행되므로 job1이 join()할때 실행되어 Ping > Pong > Ping 순으로 출력되게 된다.
 
 ## `1.4. Suspending 함수`
 
