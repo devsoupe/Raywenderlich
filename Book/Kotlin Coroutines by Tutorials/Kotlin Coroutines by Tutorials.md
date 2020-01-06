@@ -384,6 +384,10 @@ fun main() {
 
 * Pong을 수행 후 Ping을 두번 출력하거라 예상했겠지만 CoroutineStart.LAZY로 인해 실제 필요할때 수행되므로 job1이 join()할때 실행되어 Ping > Pong > Ping 순으로 출력되게 된다.
 
+### Job 계층 관리
+
+
+
 ## `1.4. Suspending 함수`
 
 * 
