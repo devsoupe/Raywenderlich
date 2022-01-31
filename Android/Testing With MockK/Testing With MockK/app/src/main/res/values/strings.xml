@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SpacingOut</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="images">Images</string>
+    <string name="earth">Earth</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+</resources>
